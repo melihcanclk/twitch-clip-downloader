@@ -1,21 +1,23 @@
 import styles from '@/styles/Home.module.css'
 import { firestore } from '../utils/firebase'
 import WriteToFirestore from '../components/firebase/write'
+import { useState } from 'react'
+
 
 const Home = (props) => {
   // get data from props
-  const { entries } = props;
+  const [entries, setEntries] = useState(props.entries);
 
   return (
     <div style={{
       margin: "20px"
     }}>
       <div className={styles.btnContainer}>
-        <WriteToFirestore />
+        <WriteToFirestore entries={entries} setEntries={setEntries} />
       </div>
       {
-        entries.map((entry) => (
-          <div key={entry.id}>
+        entries.map((entry, key) => (
+          <div key={key}>
             <h1>Username : {entry.username}</h1>
             <p>Name : {entry.firstname}</p>
             <p>Surname : {entry.lastname}</p>
@@ -30,10 +32,17 @@ const Home = (props) => {
                 second: "numeric"
               })
             }</p>
+            <button onClick={() => {
+              firestore.collection("streamers").doc(entry.id).delete().then(() => {
+                const newEntries = entries.filter((item) => item.id !== entry.id);
+                setEntries(newEntries);
+              })
+            }}>Delete {entry.id}</button>
+
           </div>
         ))
       }
-    </div>
+    </div >
   )
 }
 

@@ -11,23 +11,33 @@ const getCurrentTimestamp = () => {
 }
 
 
-const WriteToFirestore = () => {
+const WriteToFirestore = ({ entries, setEntries }) => {
     const usernameRef = useRef();
     const firstnameRef = useRef();
     const lastnameRef = useRef();
 
     const sendData = (data) => {
         const { username, firstname, lastname } = data;
-
+        const _data = {
+            username,
+            firstname,
+            lastname,
+            sendDate: getCurrentTimestamp()
+        }
         try {
-            firestore.collection("streamers").add({
-                username,
-                firstname,
-                lastname,
-                sendDate: getCurrentTimestamp()
-            }).then(
-                console.log("Document successfully written!")
-            );
+            firestore.collection("streamers").add(_data).then(() => {
+                // get new data from firestore
+                // because we cannot get id after adding new item to firestore
+                // we need to get all data from firestore
+                firestore.collection("streamers").get().then((entries) => {
+                    const entriesData = entries.docs.map((entry) => ({
+                        id: entry.id,
+                        ...entry.data()
+                    }))
+                    setEntries(entriesData);
+                    alert("Data inserted successfully");
+                })
+            })
         }
         catch (error) {
             console.log(error);
