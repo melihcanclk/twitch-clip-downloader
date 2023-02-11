@@ -26,7 +26,7 @@ const Home = () => {
   return (
     <div style={styles.body}>
       <div style={styles.btnContainer}>
-        <a style={styles.btnInner} href="/addUser">Add User</a>
+        {/* <a style={styles.btnInner} href="/addUser">Add User</a> */}
         <a style={styles.btnInner} href="/getClips">Get Clips</a>
       </div>
     </div>
