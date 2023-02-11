@@ -1,4 +1,3 @@
-import firebase from 'firebase/app';
 import { firestore } from '../../utils/firebase';
 import { useRef } from 'react';
 
@@ -11,15 +10,33 @@ const getCurrentTimestamp = () => {
 }
 
 
-const WriteToFirestore = ({ entries, setEntries }) => {
+const WriteToFirestore = ({ setEntries }) => {
     const usernameRef = useRef();
     const firstnameRef = useRef();
     const lastnameRef = useRef();
 
+    const styles = {
+        input: {
+            padding: "10px",
+            margin: "10px",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+        },
+        btn: {
+            padding: "10px",
+            margin: "10px",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            backgroundColor: "#f44336",
+            color: "white"
+        }
+    }
+
     const sendData = (data) => {
         const { username, firstname, lastname } = data;
+        const _username = username.trim().toLowerCase();
         const _data = {
-            username,
+            username: _username,
             firstname,
             lastname,
             sendDate: getCurrentTimestamp()
@@ -35,7 +52,14 @@ const WriteToFirestore = ({ entries, setEntries }) => {
                         ...entry.data()
                     }))
                     setEntries(entriesData);
+                    // reset refs
+                    usernameRef.current.value = "";
+                    firstnameRef.current.value = "";
+                    lastnameRef.current.value = "";
                     alert("Data inserted successfully");
+                }).catch((error) => {
+                    console.log(error);
+                    alert("Error getting data");
                 })
             })
         }
@@ -46,17 +70,23 @@ const WriteToFirestore = ({ entries, setEntries }) => {
     return (
         <div>
             <h1>Write to Firestore</h1>
-            <input ref={usernameRef} type="text" placeholder="Username" />
-            <input ref={firstnameRef} type="text" placeholder="Firstname" />
-            <input ref={lastnameRef} type="text" placeholder="Lastname" />
-            <button onClick={() =>
-                sendData(
-                    {
-                        username: usernameRef.current.value,
-                        firstname: firstnameRef.current.value,
-                        lastname: lastnameRef.current.value,
-                    }
-                )}>Insert Test</button>
+            <div style={{
+                display: "inline-block",
+                padding: "10px",
+            }}>
+                <input style={styles.input} ref={usernameRef} type="text" placeholder="Username" />
+                <input style={styles.input} ref={firstnameRef} type="text" placeholder="Firstname" />
+                <input style={styles.input} ref={lastnameRef} type="text" placeholder="Lastname" />
+                <button style={styles.btn}
+                    onClick={() =>
+                        sendData(
+                            {
+                                username: usernameRef.current.value,
+                                firstname: firstnameRef.current.value,
+                                lastname: lastnameRef.current.value,
+                            }
+                        )}>Insert</button>
+            </div>
         </div>
     )
 

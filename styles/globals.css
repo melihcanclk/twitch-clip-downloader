@@ -93,6 +93,9 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+    display: flex;
+    height: 100vh;
+    justify-content: center;
 }
 
 a {
