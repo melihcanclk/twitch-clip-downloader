@@ -1,7 +1,7 @@
 import fetchData from "./fetch";    
 
 // convert twitch username to id
-const convertUserNameToID = async (username) => {
+export const convertUserNameToID = async (username) => {
     const res = await fetchData(`https://api.twitch.tv/helix/users?login=${username}`);
     if (res.data.length > 0) {
         return res.data[0].id;
@@ -10,5 +10,3 @@ const convertUserNameToID = async (username) => {
         return null;
     }
 }
-
-export default convertUserNameToID;
