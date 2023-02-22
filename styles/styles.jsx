@@ -44,5 +44,11 @@ export const styles = {
         color: "white",
         textDecoration: "none",
         textAlign: "center"
+    },
+    searchComponent: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
     }
 }

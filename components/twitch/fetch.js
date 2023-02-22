@@ -1,9 +1,8 @@
 // wrap twitch fetch in custom hook
-const fetchData = (async (url, options) => {
+const fetchData = (async (url) => {
     const res = await fetch(url, {
-        ...options,
+        method: 'GET',
         headers: {
-            ...options.headers,
             'Client-ID': process.env.TWITCH_CLIENT_ID,
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`
         }

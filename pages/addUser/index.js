@@ -21,6 +21,7 @@ export default AddUser
 
 export async function getServerSideProps() {
   const entries = await firestore.collection("streamers").get();
+  console.log({ entries })
   const entriesData = entries.docs.map((entry) => ({
       id: entry.id,
       ...entry.data()

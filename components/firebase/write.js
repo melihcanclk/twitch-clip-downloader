@@ -12,8 +12,6 @@ const getCurrentTimestamp = () => {
 
 const WriteToFirestore = ({ setEntries }) => {
     const usernameRef = useRef();
-    const firstnameRef = useRef();
-    const lastnameRef = useRef();
 
     const styles = {
         input: {
@@ -33,12 +31,10 @@ const WriteToFirestore = ({ setEntries }) => {
     }
 
     const sendData = (data) => {
-        const { username, firstname, lastname } = data;
+        const { username } = data;
         const _username = username.trim().toLowerCase();
         const _data = {
             username: _username,
-            firstname,
-            lastname,
             sendDate: getCurrentTimestamp()
         }
         try {
@@ -54,8 +50,6 @@ const WriteToFirestore = ({ setEntries }) => {
                     setEntries(entriesData);
                     // reset refs
                     usernameRef.current.value = "";
-                    firstnameRef.current.value = "";
-                    lastnameRef.current.value = "";
                     alert("Data inserted successfully");
                 }).catch((error) => {
                     console.log(error);
@@ -75,15 +69,11 @@ const WriteToFirestore = ({ setEntries }) => {
                 padding: "10px",
             }}>
                 <input style={styles.input} ref={usernameRef} type="text" placeholder="Username" />
-                <input style={styles.input} ref={firstnameRef} type="text" placeholder="Firstname" />
-                <input style={styles.input} ref={lastnameRef} type="text" placeholder="Lastname" />
                 <button style={styles.btn}
                     onClick={() =>
                         sendData(
                             {
                                 username: usernameRef.current.value,
-                                firstname: firstnameRef.current.value,
-                                lastname: lastnameRef.current.value,
                             }
                         )}>Insert</button>
             </div>
