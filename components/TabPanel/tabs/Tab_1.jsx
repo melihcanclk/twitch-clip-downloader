@@ -2,6 +2,7 @@ import React from 'react'
 import fetchData from '@/components/twitch/fetch';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import { styles } from '@/styles/styles';
+import { games } from '@/components/twitch/games';
 
 export const Tab_1 = ({ setClips }) => {
     const usernameRef = React.useRef();
@@ -20,7 +21,8 @@ export const Tab_1 = ({ setClips }) => {
                         const clips = await fetchData(
                             `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}`
                         )
-                        setClips(clips.data);
+                        console.log(clips)
+                        setClips(clips.data.filter(clip => clip.game_id === games[0].id));
                     }}
                 >Insert</button>
             </div>
