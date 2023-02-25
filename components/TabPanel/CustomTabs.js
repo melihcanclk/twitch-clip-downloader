@@ -26,8 +26,8 @@ export default function CustomTabs() {
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: 'divider' }}
                 >
-                    <Tab style={styles.tab} label="From Firebase" {...a11yProps(0)} />
-                    {/* <Tab style={styles.tab} label="From Search" {...a11yProps(1)} /> */}
+                    {/* <Tab style={styles.tab} label="From Firebase" {...a11yProps(0)} /> */}
+                    <Tab style={styles.tab} label="From Search" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             {/* <TabPanel value={value} index={0} >
@@ -47,7 +47,7 @@ export default function CustomTabs() {
                                         display: 'flex',
                                         justifyContent: 'center',
                                     }}>
-                                        <a href={`${clip.url}`}>{clip.title}</a>
+                                        <a target={`_blank`} href={`${clip.url}`}>{clip.title}</a>
                                     </div>
                                 </div>
                             )

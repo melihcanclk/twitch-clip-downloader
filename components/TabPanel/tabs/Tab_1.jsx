@@ -18,11 +18,18 @@ export const Tab_1 = ({ setClips }) => {
                         const username = usernameRef.current.value;
                         const userID = await convertUserNameToID(username);
 
+                        // today date 
+                        const today = new Date();
+                        // one week before today
+                        const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+                        // convert to ISO string
+                        const oneWeekBeforeISO = oneWeekBefore.toISOString();
+                        console.log({ oneWeekBeforeISO })
                         const clips = await fetchData(
-                            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}`
+                            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&started_at=${oneWeekBeforeISO}`
                         )
                         console.log(clips)
-                        setClips(clips.data.filter(clip => clip.game_id === games[0].id));
+                        setClips(clips.data); //.filter(clip => clip.game_id === games[0].id)
                     }}
                 >Insert</button>
             </div>
