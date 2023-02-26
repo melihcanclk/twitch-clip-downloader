@@ -9,28 +9,22 @@ export const SelectUserClips = ({ setClips }) => {
     return (
         <div>
             <div style={styles.btnContainer}>
-                <input style={styles.input} ref={usernameRef} type="text" placeholder="Username" />
-                <button style={styles.btn}
-                    onClick={async () => {
-                        // get twitch clips using username from helix twitch api
-                        // https://dev.twitch.tv/docs/api/reference#get-clips
-                        const username = usernameRef.current.value;
-                        const userID = await convertUserNameToID(username);
+                <form onSubmit={async (e) => {
+                    e.preventDefault();
+                    const username = usernameRef.current.value;
+                    const userID = await convertUserNameToID(username);
+                    const today = new Date();
+                    const oneWeekBeforeISO = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
 
-                        // today date 
-                        const today = new Date();
-                        // one week before today
-                        const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-                        // convert to ISO string
-                        const oneWeekBeforeISO = oneWeekBefore.toISOString();
-                        console.log({ oneWeekBeforeISO })
-                        const clips = await fetchData(
-                            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&started_at=${oneWeekBeforeISO}`
-                        )
-                        console.log(clips)
-                        setClips(clips.data); //.filter(clip => clip.game_id === games[0].id)
-                    }}
-                >Insert</button>
+                    const clips = await fetchData(
+                        `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
+                    )
+                    setClips(clips.data);
+                }}>
+                    <input style={styles.input} type="text" ref={usernameRef} placeholder="Enter username" />
+                    <button style={styles.btn} type="submit">Search Clip</button>
+                </form>
+
             </div>
         </div>
     )

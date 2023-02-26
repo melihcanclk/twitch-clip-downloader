@@ -38,16 +38,14 @@ export default function CustomTabs() {
                     sx={{ borderRight: 1, borderColor: 'divider' }}
                 >
                     <Tab style={styles.tab} label="From Search" {...a11yProps(0)} />
-                    <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} />
-                    <Tab style={styles.tab} label="From Twitch API" {...a11yProps(2)} />
+                    {/* <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} /> */}
+                    {/* <Tab style={styles.tab} label="From Twitch API" {...a11yProps(2)} /> */}
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0} >
                 <div>
                     <SelectUserClips setClips={setClips} />
-                    <div>
-                        <DisplayClips clips={clips} />
-                    </div>
+                    <DisplayClips clips={clips} />
                 </div>
             </TabPanel>
             <TabPanel value={value} index={1} >
