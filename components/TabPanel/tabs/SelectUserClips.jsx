@@ -2,9 +2,8 @@ import React from 'react'
 import fetchData from '@/components/twitch/fetch';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import { styles } from '@/styles/styles';
-import { games } from '@/components/twitch/games';
 
-export const Tab_1 = ({ setClips }) => {
+export const SelectUserClips = ({ setClips }) => {
     const usernameRef = React.useRef();
 
     return (

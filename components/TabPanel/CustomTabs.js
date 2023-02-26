@@ -6,8 +6,8 @@ import { styles } from '@/styles/styles';
 
 import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { a11yProps } from '@/components/TabPanel/a11yProps';
-import { Tab_0 } from '@/components/TabPanel/tabs/Tab_0';
-import { Tab_1 } from '@/components/TabPanel/tabs/Tab_1';
+import { GetUserClipsFromFirebase } from '@/components/TabPanel/tabs/GetUserClipsFromFirebase';
+import { SelectUserClips } from '@/components/TabPanel/tabs/SelectUserClips';
 
 export default function CustomTabs() {
     const [value, setValue] = React.useState(0);
@@ -26,18 +26,13 @@ export default function CustomTabs() {
                     aria-label="Vertical tabs example"
                     sx={{ borderRight: 1, borderColor: 'divider' }}
                 >
-                    {/* <Tab style={styles.tab} label="From Firebase" {...a11yProps(0)} /> */}
-                    <Tab style={styles.tab} label="From Search" {...a11yProps(1)} />
+                    <Tab style={styles.tab} label="From Search" {...a11yProps(0)} />
+                    <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} />
                 </Tabs>
             </Box>
-            {/* <TabPanel value={value} index={0} >
-                <div>
-                    <Tab_0 />
-                </div>
-            </TabPanel> */}
             <TabPanel value={value} index={0} >
                 <div>
-                    <Tab_1 setClips={setClips} />
+                    <SelectUserClips setClips={setClips} />
                     <div>
                         {clips.map((clip, index) => {
                             return (
@@ -53,6 +48,11 @@ export default function CustomTabs() {
                             )
                         })}
                     </div>
+                </div>
+            </TabPanel>
+            <TabPanel value={value} index={1} >
+                <div>
+                    <GetUserClipsFromFirebase />
                 </div>
             </TabPanel>
         </Box>

@@ -9,7 +9,6 @@ const getCurrentTimestamp = () => {
     return timestamp;
 }
 
-
 const WriteToFirestore = ({ setEntries }) => {
     const usernameRef = useRef();
 

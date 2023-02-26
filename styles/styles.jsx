@@ -51,6 +51,11 @@ export const styles = {
         alignItems: "center",
         justifyContent: "center",
     },
+    center: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+    },
     tab: {
         color: "white",
     }
