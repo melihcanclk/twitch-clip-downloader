@@ -11,6 +11,7 @@ import { useGetFirebase } from '@/hooks/useGetFirebase';
 import { GetClipsFromFirebase } from '@/components/TabPanel/tabs/GetUserClipsFromFirebase';
 import { SelectUserClips } from '@/components/TabPanel/tabs/SelectUserClips';
 import useGetFollowedTwitch from '@/hooks/useGetFollowedTwitch';
+import DisplayClips from './tabs/DisplayClips';
 
 export const TypeOfClip = {
     TWITCH: 'TWITCH',
@@ -45,19 +46,7 @@ export default function CustomTabs() {
                 <div>
                     <SelectUserClips setClips={setClips} />
                     <div>
-                        {clips.map((clip, index) => {
-                            return (
-                                <div key={index}>
-                                    <img src={clip.thumbnail_url} />
-                                    <div style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <a target={`_blank`} href={`${clip.url}`}>{clip.title}</a>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                        <DisplayClips clips={clips} />
                     </div>
                 </div>
             </TabPanel>
