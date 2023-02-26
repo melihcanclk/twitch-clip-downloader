@@ -23,7 +23,7 @@ export const GetUserClipsFromFirebase = () => {
             const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
             const clips = await fetchData(
-                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&started_at=${oneWeekBeforeISO}`
+                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
             )
             setClips(clips.data);
         }
@@ -37,7 +37,7 @@ export const GetUserClipsFromFirebase = () => {
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '800px' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                 <Tabs
                     value={value}
@@ -46,26 +46,24 @@ export const GetUserClipsFromFirebase = () => {
                     sx={{ borderRight: 1, borderColor: 'divider' }}
                 >
                     {
-
                         streamers.map((entry, index) => (
-                            <Tab style={styles.tab} label={entry.username} {...a11yProps(index)} />
+                            <Tab key={index} style={styles.tab} label={entry.username} {...a11yProps(index)} />
                         ))
-
                     }
                 </Tabs>
             </Box>
             {
-                streamers.map((entry, index) => (
+                streamers.map((streamer, index) => (
                     <TabPanel value={value} index={index}>
                         {
                             clips.map((clip, index) => (
-                                <div key={index}>
-                                    <div >
-                                        <a href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
-                                            <img src={clip.thumbnail_url} alt={clip.title} />
-                                            <p style={styles.center}>{clip.title}</p>
-                                        </a>
+                                <div key={index} style={{ margin: '1rem' }} >
+                                    <div style={{ width: '100%', ...styles.center }} >
+                                        <img src={clip.thumbnail_url} alt={clip.title} />
                                     </div>
+                                    <a style={styles.center} href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
+                                        <p >{clip.title}</p>
+                                    </a>
                                 </div>
                             ))
 
