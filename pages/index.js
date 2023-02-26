@@ -14,6 +14,8 @@ const Home = () => {
       localStorage.setItem('url', window.location.hash);
     }
   }, [])
+  const node_env = process.env.NODE_ENV;
+  const domain = node_env === 'development' ? 'http://localhost:3000' : 'https://twitch-clipper.vercel.app';
   return (
     <div style={styles.body}>
       {
@@ -24,7 +26,7 @@ const Home = () => {
           </div>
         ) : (
           <div style={styles.connectTwitch}>
-            <a href={`https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=https://localhost:3000&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls`}>Connect with Twitch</a>
+            <a href={`https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=${domain}&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls`}>Connect with Twitch</a>
           </div>
         )
       }
