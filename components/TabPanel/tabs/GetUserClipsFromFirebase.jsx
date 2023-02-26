@@ -19,13 +19,15 @@ export const GetClipsFromFirebase = ({ streamers, type }) => {
         // when value changes, get clips using entry username
         async function getClips() {
             const userID = await convertUserNameToID(type === TypeOfClip.FIREBASE ? streamers[value].username : streamers[value].to_name);
+            const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
+            const game_id = game.data[0].id;
             const today = new Date();
             const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
             const clips = await fetchData(
                 `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
             )
-            setClips(clips.data);
+            setClips(clips.data.filter(clip => clip.game_id === game_id));
         }
         if (streamers.length > 0) {
             getClips();

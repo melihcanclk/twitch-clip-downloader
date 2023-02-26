@@ -7,17 +7,20 @@ const DisplayClips = ({ clips }) => {
             {
                 clips.map((clip, index) => (
                     <div key={index} style={{ margin: '1rem' }} >
-                        <div style={{ width: '100%', ...styles.center }} >
-                            <img src={clip.thumbnail_url} alt={clip.title} />
-                        </div>
                         <a style={styles.center} href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
-                            <p >{clip.title}</p>
+                            <img src={clip.thumbnail_url} alt={clip.title} />
                         </a>
-                    </div>
+                        <div style={styles.center}>
+                            <p>{clip.title}</p>
+                        </div>
+                        <div style={styles.center}>
+                            <p>Number of views: {clip.view_count}</p>
+                        </div>
+                    </div >
                 ))
 
             }
-        </div>
+        </div >
     )
 }
 
