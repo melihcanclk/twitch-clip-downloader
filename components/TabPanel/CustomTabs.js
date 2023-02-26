@@ -6,10 +6,20 @@ import { styles } from '@/styles/styles';
 
 import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { a11yProps } from '@/components/TabPanel/a11yProps';
-import { GetUserClipsFromFirebase } from '@/components/TabPanel/tabs/GetUserClipsFromFirebase';
+import { useGetFirebase } from '@/hooks/useGetFirebase';
+
+import { GetClipsFromFirebase } from '@/components/TabPanel/tabs/GetUserClipsFromFirebase';
 import { SelectUserClips } from '@/components/TabPanel/tabs/SelectUserClips';
+import useGetFollowedTwitch from '@/hooks/useGetFollowedTwitch';
+
+export const TypeOfClip = {
+    TWITCH: 'TWITCH',
+    FIREBASE: 'FIREBASE',
+}
 
 export default function CustomTabs() {
+    const [firebaseStreamers] = useGetFirebase();
+    const [twitchStreamers] = useGetFollowedTwitch();
     const [value, setValue] = React.useState(0);
     const [clips, setClips] = React.useState([]);
 
@@ -28,6 +38,7 @@ export default function CustomTabs() {
                 >
                     <Tab style={styles.tab} label="From Search" {...a11yProps(0)} />
                     <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} />
+                    <Tab style={styles.tab} label="From Twitch API" {...a11yProps(2)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0} >
@@ -52,7 +63,12 @@ export default function CustomTabs() {
             </TabPanel>
             <TabPanel value={value} index={1} >
                 <div>
-                    <GetUserClipsFromFirebase />
+                    <GetClipsFromFirebase streamers={firebaseStreamers} type={TypeOfClip.FIREBASE} />
+                </div>
+            </TabPanel>
+            <TabPanel value={value} index={2} >
+                <div>
+                    <GetClipsFromFirebase streamers={twitchStreamers} type={TypeOfClip.TWITCH} />
                 </div>
             </TabPanel>
         </Box>

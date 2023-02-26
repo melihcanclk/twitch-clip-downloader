@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useGetFirebase } from '@/hooks/useGetFirebase';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styles } from '@/styles/styles';
@@ -8,17 +7,18 @@ import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
+import DisplayClips from './DisplayClips';
+import { TypeOfClip } from '../CustomTabs';
 
-export const GetUserClipsFromFirebase = () => {
+export const GetClipsFromFirebase = ({ streamers, type }) => {
     // get users from firebase
-    const [streamers] = useGetFirebase();
     const [value, setValue] = React.useState(0);
     const [clips, setClips] = React.useState([]);
 
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {
-            const userID = await convertUserNameToID(streamers[value].username);
+            const userID = await convertUserNameToID(type === TypeOfClip.FIREBASE ? streamers[value].username : streamers[value].to_name);
             const today = new Date();
             const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
@@ -47,26 +47,14 @@ export const GetUserClipsFromFirebase = () => {
             >
                 {
                     streamers.map((entry, index) => (
-                        <Tab key={index} style={styles.tab} label={entry.username} {...a11yProps(index)} />
+                        <Tab key={index} style={styles.tab} label={type === TypeOfClip.FIREBASE ? entry.username : entry.to_name} {...a11yProps(index)} />
                     ))
                 }
             </Tabs>
             {
                 streamers.map((streamer, index) => (
-                    <TabPanel value={value} index={index}>
-                        {
-                            clips.map((clip, index) => (
-                                <div key={index} style={{ margin: '1rem' }} >
-                                    <div style={{ width: '100%', ...styles.center }} >
-                                        <img src={clip.thumbnail_url} alt={clip.title} />
-                                    </div>
-                                    <a style={styles.center} href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
-                                        <p >{clip.title}</p>
-                                    </a>
-                                </div>
-                            ))
-
-                        }
+                    <TabPanel key={index} value={value} index={index}>
+                        <DisplayClips clips={clips} />
                     </TabPanel>
                 ))
             }
