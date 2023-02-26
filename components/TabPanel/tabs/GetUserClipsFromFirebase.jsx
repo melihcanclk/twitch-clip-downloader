@@ -37,21 +37,20 @@ export const GetUserClipsFromFirebase = () => {
     };
 
     return (
-        <Box sx={{ width: '800px' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Vertical tabs example"
-                    sx={{ borderRight: 1, borderColor: 'divider' }}
-                >
-                    {
-                        streamers.map((entry, index) => (
-                            <Tab key={index} style={styles.tab} label={entry.username} {...a11yProps(index)} />
-                        ))
-                    }
-                </Tabs>
-            </Box>
+        <Box sx={{ maxWidth: '800px' }}>
+            <Tabs
+                value={value}
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons="auto"
+                aria-label="scrollable auto tabs example"
+            >
+                {
+                    streamers.map((entry, index) => (
+                        <Tab key={index} style={styles.tab} label={entry.username} {...a11yProps(index)} />
+                    ))
+                }
+            </Tabs>
             {
                 streamers.map((streamer, index) => (
                     <TabPanel value={value} index={index}>
