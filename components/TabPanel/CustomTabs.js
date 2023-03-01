@@ -39,7 +39,7 @@ export default function CustomTabs() {
                 >
                     <Tab style={styles.tab} label="From Search" {...a11yProps(0)} />
                     {/* <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} /> */}
-                    {/* <Tab style={styles.tab} label="From Twitch API" {...a11yProps(2)} /> */}
+                    <Tab style={styles.tab} label="From Twitch API" {...a11yProps(1)} />
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0} >
@@ -48,12 +48,12 @@ export default function CustomTabs() {
                     <DisplayClips clips={clips} />
                 </div>
             </TabPanel>
-            <TabPanel value={value} index={1} >
+            {/* <TabPanel value={value} index={1} >
                 <div>
                     <GetClipsFromFirebase streamers={firebaseStreamers} type={TypeOfClip.FIREBASE} />
                 </div>
-            </TabPanel>
-            <TabPanel value={value} index={2} >
+            </TabPanel> */}
+            <TabPanel value={value} index={1} >
                 <div>
                     <GetClipsFromFirebase streamers={twitchStreamers} type={TypeOfClip.TWITCH} />
                 </div>

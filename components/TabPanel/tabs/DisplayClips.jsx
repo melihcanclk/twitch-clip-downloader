@@ -10,11 +10,11 @@ const DisplayClips = ({ clips }) => {
                     <div key={index} style={{ margin: '1rem' }} >
                         <a style={styles.center} href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
                             <iframe
-                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&parent=localhost`}
+                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=localhost`}
                                 height="400"
                                 width="600"
+                                allowFullScreen
                             >
-
                             </iframe>
                         </a>
                         <div style={styles.center}>
