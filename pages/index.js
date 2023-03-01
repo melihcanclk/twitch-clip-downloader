@@ -15,7 +15,7 @@ const Home = () => {
     }
   }, [])
   const node_env = process.env.NODE_ENV;
-  const domain = node_env === 'development' ? 'http://localhost:3000' : 'https://twitch-clip-downloader-dev.vercel.app/';
+  const domain = node_env === 'development' ? 'https://localhost:3000' : 'https://twitch-clip-downloader-dev.vercel.app/';
   return (
     <div style={styles.body}>
       {

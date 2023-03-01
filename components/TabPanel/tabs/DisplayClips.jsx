@@ -1,5 +1,6 @@
 import React from 'react'
 import { styles } from '@/styles/styles'
+import { downloadClips } from '@/components/twitch/downloadClips'
 
 const DisplayClips = ({ clips }) => {
     return (
@@ -8,7 +9,13 @@ const DisplayClips = ({ clips }) => {
                 clips.map((clip, index) => (
                     <div key={index} style={{ margin: '1rem' }} >
                         <a style={styles.center} href={`https://clips.twitch.tv/${clip.id}`} target="_blank" rel="noreferrer">
-                            <img src={clip.thumbnail_url} alt={clip.title} />
+                            <iframe
+                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&parent=localhost`}
+                                height="400"
+                                width="600"
+                            >
+
+                            </iframe>
                         </a>
                         <div style={styles.center}>
                             <p>{clip.title}</p>
@@ -22,13 +29,7 @@ const DisplayClips = ({ clips }) => {
                                     alert('Copied to clipboard')
                                 })
                             }}>Copy link</button>
-                            <button style={styles.btn} onClick={() => {
-                                // download video clip
-                                const a = document.createElement('a');
-                                a.href = clip.thumbnail_url.replace('-preview-480x272.jpg', '.mp4');
-                                a.download = clip.title;
-                                a.click();
-                            }}>Download</button>
+                            <button style={styles.btn} onClick={() => downloadClips(clip)}>Download</button>
                         </div>
                     </div >
                 ))
