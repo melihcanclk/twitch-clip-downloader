@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Tabs from '@mui/material/Tabs';
+import { default as MuiTabs } from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { styles } from '@/styles/styles';
 
 import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { a11yProps } from '@/components/TabPanel/a11yProps';
-import { useGetFirebase } from '@/hooks/useGetFirebase';
+// import { useGetFirebase } from '@/hooks/useGetFirebase';
 
 import { GetClipsFromFirebase } from '@/components/TabPanel/tabs/GetUserClipsFromFirebase';
 import { SelectUserClips } from '@/components/TabPanel/tabs/SelectUserClips';
@@ -18,8 +18,8 @@ export const TypeOfClip = {
     FIREBASE: 'FIREBASE',
 }
 
-export default function CustomTabs() {
-    const [firebaseStreamers] = useGetFirebase();
+export const Tabs = () => {
+    // const [firebaseStreamers] = useGetFirebase();
     const [twitchStreamers] = useGetFollowedTwitch();
     const [value, setValue] = React.useState(0);
     const [clips, setClips] = React.useState([]);
@@ -31,7 +31,7 @@ export default function CustomTabs() {
     return (
         <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <Tabs
+                <MuiTabs
                     value={value}
                     onChange={handleChange}
                     aria-label="Vertical tabs example"
@@ -40,7 +40,7 @@ export default function CustomTabs() {
                     <Tab style={styles.tab} label="From Search" {...a11yProps(0)} />
                     {/* <Tab style={styles.tab} label="From Firebase" {...a11yProps(1)} /> */}
                     <Tab style={styles.tab} label="From Twitch API" {...a11yProps(1)} />
-                </Tabs>
+                </MuiTabs>
             </Box>
             <TabPanel value={value} index={0} >
                 <div>

@@ -8,7 +8,7 @@ import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
 import DisplayClips from './DisplayClips';
-import { TypeOfClip } from '../CustomTabs';
+import { TypeOfClip } from '../Tabs';
 
 export const GetClipsFromFirebase = ({ streamers, type }) => {
     // get users from firebase
