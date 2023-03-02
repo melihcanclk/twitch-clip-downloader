@@ -7,27 +7,34 @@ import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
-import DisplayClips from './DisplayClips';
 import { TypeOfClip } from '../Tabs';
+import { DisplayError } from '@/components/displayClips/DisplayError';
 
-export const GetClipsFromFirebase = ({ streamers, type }) => {
+export const GetClips = ({ clips, loading, error, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
     const [value, setValue] = React.useState(0);
-    const [clips, setClips] = React.useState([]);
 
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {
+            setLoading(true);
+            setError(false);
             const userID = await convertUserNameToID(type === TypeOfClip.FIREBASE ? streamers[value].username : streamers[value].to_name);
             const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
             const game_id = game.data[0].id;
             const today = new Date();
             const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
-            const clips = await fetchData(
+
+            fetchData(
                 `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
-            )
-            setClips(clips.data.filter(clip => clip.game_id === game_id));
+            ).then(res => {
+                setClips(res.data.filter(clip => clip.game_id === game_id));
+                setLoading(false);
+            }).catch(err => {
+                setError(true);
+                setLoading(false);
+            })
         }
         if (streamers.length > 0) {
             getClips();
@@ -56,7 +63,7 @@ export const GetClipsFromFirebase = ({ streamers, type }) => {
             {
                 streamers.map((streamer, index) => (
                     <TabPanel key={index} value={value} index={index}>
-                        <DisplayClips clips={clips} />
+                        <DisplayError loading={loading} error={error} clips={clips} />
                     </TabPanel>
                 ))
             }
