@@ -28,6 +28,7 @@ export const Tabs = () => {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        setClips([]);
     };
 
     return (
