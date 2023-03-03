@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { styles } from '@/styles/styles';
 
+
+const node_env = process.env.NODE_ENV;
+export const domain = node_env === 'development' ? 'https://localhost:3000' : 'https://twitch-clip-downloader-dev.vercel.app/';
+
 const Home = () => {
 
   const [accessToken, setAccessToken] = useState(null);
@@ -14,8 +18,6 @@ const Home = () => {
       localStorage.setItem('url', window.location.hash);
     }
   }, [])
-  const node_env = process.env.NODE_ENV;
-  const domain = node_env === 'development' ? 'https://localhost:3000' : 'https://twitch-clip-downloader-dev.vercel.app/';
   return (
     <div style={styles.body}>
       {
