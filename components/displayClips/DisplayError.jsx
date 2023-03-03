@@ -1,5 +1,5 @@
 import React from 'react';
-import DisplayClips from './DisplayClips';
+import DisplayClips from '@/components/displayClips/DisplayClips';
 
 export const DisplayError = ({ clips, loading, error }) => {
     return (

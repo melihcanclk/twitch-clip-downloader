@@ -1,4 +1,4 @@
-import { firestore } from '../../utils/firebase';
+import { firestore } from '@/utils/firebase';
 import { useRef } from 'react';
 
 

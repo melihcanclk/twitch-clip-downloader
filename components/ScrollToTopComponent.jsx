@@ -1,8 +1,8 @@
-import { ScrollToTopButton } from "./ScrollToTopButton"
+import { ScrollToTopButton } from '@/components/ScrollToTopButton'
 
 export const ScrollToTopComponent = ({ children, title }) => {
     return (
-        <div >
+        <div>
             <h1 id="scroll-to-top" className="spinner-container">{title}</h1>
             {children}
             <ScrollToTopButton />
