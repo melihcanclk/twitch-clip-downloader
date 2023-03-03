@@ -58,5 +58,11 @@ export const styles = {
     },
     tab: {
         color: "white",
-    }
+    },
+    form: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
 }

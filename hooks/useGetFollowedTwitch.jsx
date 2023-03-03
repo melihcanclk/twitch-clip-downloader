@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import fetchData from '@/components/twitch/fetch';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 
-const useGetFollowedTwitch = () => {
+export const useGetFollowedTwitch = () => {
 
     const [followedTwitch, setFollowedTwitch] = React.useState([]);
 
@@ -29,5 +29,3 @@ const useGetFollowedTwitch = () => {
     return [followedTwitch];
 
 }
-
-export default useGetFollowedTwitch;

@@ -6,6 +6,10 @@ import { styles } from '@/styles/styles';
 export const SelectUserClips = ({ setClips, setLoading, setError }) => {
     const usernameRef = React.useRef();
 
+    const clearClips = () => {
+        setClips([]);
+    }
+
     return (
         <div>
             <div style={styles.btnContainer}>
@@ -26,9 +30,12 @@ export const SelectUserClips = ({ setClips, setLoading, setError }) => {
                     }).finally(() => {
                         setLoading(false);
                     });
-                }}>
+                }}
+                    style={styles.form}
+                >
                     <input style={styles.input} type="text" ref={usernameRef} placeholder="Enter username" />
                     <button style={styles.btn} type="submit">Search Clip</button>
+                    <button style={styles.btn} onClick={clearClips} type="reset">Reset</button>
                 </form>
             </div>
         </div>
