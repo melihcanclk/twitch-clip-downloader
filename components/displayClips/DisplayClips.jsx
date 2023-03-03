@@ -4,7 +4,7 @@ import { downloadClips } from '@/components/twitch/downloadClips'
 import { domain } from '@/pages/index'
 
 const DisplayClips = ({ clips }) => {
-    console.log({ domain })
+    const domainIframe = domain.replace('https://', '')
     return (
         <div>
             {
@@ -12,7 +12,7 @@ const DisplayClips = ({ clips }) => {
                     <div key={index} style={{ margin: '1rem' }} >
                         <div style={styles.center} >
                             <iframe
-                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=${domain}`}
+                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=${domainIframe}`}
                                 height="720"
                                 width="1280"
                                 allowFullScreen
