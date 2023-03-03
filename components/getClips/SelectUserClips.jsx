@@ -10,34 +10,36 @@ export const SelectUserClips = ({ setClips, setLoading, setError }) => {
         setClips([]);
     }
 
-    return (
-        <div>
-            <div style={styles.btnContainer}>
-                <form onSubmit={async (e) => {
-                    e.preventDefault();
-                    setLoading(true);
-                    const username = usernameRef.current.value;
-                    const userID = await convertUserNameToID(username);
-                    const today = new Date();
-                    const oneWeekBeforeISO = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
+    const onSubmitSearch = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        const username = usernameRef.current.value;
+        const userID = await convertUserNameToID(username);
+        const today = new Date();
+        const oneWeekBeforeISO = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
 
-                    fetchData(
-                        `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
-                    ).then(clips => {
-                        setClips(clips.data);
-                    }).catch(err => {
-                        setError(err);
-                    }).finally(() => {
-                        setLoading(false);
-                    });
-                }}
-                    style={styles.form}
-                >
-                    <input style={styles.input} type="text" ref={usernameRef} placeholder="Enter username" />
+        fetchData(
+            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
+        ).then(clips => {
+            setClips(clips.data);
+        }).catch(err => {
+            setError(err);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
+    return (
+        <div style={styles.btnContainer}>
+            <form onSubmit={onSubmitSearch}
+                style={styles.form}
+            >
+                <input style={styles.input} type="text" ref={usernameRef} placeholder="Enter username" />
+                <div>
                     <button style={styles.btn} type="submit">Search Clip</button>
                     <button style={styles.btn} onClick={clearClips} type="reset">Reset</button>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     )
 }
