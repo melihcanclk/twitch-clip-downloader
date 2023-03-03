@@ -25,9 +25,9 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
             const today = new Date();
             const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
-
+            // TODO : add pagination
             fetchData(
-                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
+                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=20&started_at=${oneWeekBeforeISO}`
             ).then(res => {
                 setClips(res.data.filter(clip => clip.game_id === game_id));
                 setLoading(false);
@@ -46,7 +46,7 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
     };
 
     return (
-        <Box sx={{ maxWidth: '800px' }}>
+        <Box sx={{ maxWidth: '1100px' }}>
             <Tabs
                 value={value}
                 onChange={handleChange}
