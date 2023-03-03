@@ -1,4 +1,4 @@
-import fetchData from "./fetch";    
+import fetchData from "@/components/twitch/fetch";
 
 // convert twitch username to id
 export const convertUserNameToID = async (username) => {

@@ -7,7 +7,7 @@ import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
-import { TypeOfClip } from '../Tabs';
+import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
 
 export const GetClips = ({ clips, loading, error, setClips, setLoading, setError, streamers, type }) => {

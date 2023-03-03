@@ -34,7 +34,8 @@ export const styles = {
         border: "1px solid #ccc",
         borderRadius: "5px",
         backgroundColor: "#f44336",
-        color: "white"
+        color: "white",
+        cursor: "pointer"
     },
     connectTwitch: {
         padding: "10px",
@@ -58,5 +59,11 @@ export const styles = {
     },
     tab: {
         color: "white",
-    }
+    },
+    form: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    },
 }
