@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { styles } from '@/styles/styles';
 
 
-const node_env = process.env.NODE_ENV;
+export const node_env = process.env.NODE_ENV;
 export const domain = node_env === 'development' ? 'https://localhost:3000' : 'https://twitch-clip-downloader-dev.vercel.app/';
 
 const Home = () => {

@@ -1,10 +1,11 @@
 import React from 'react'
 import { styles } from '@/styles/styles'
 import { downloadClips } from '@/components/twitch/downloadClips'
-import { domain } from '@/pages/index'
+import { domain, node_env } from '@/pages/index'
 
 const DisplayClips = ({ clips }) => {
-    const domainIframe = domain.replace('https://', '')
+    const parentDomain = node_env === 'development' ? 'localhost' : domain.replace('https://', '').slice(0, -1)
+
     return (
         <div>
             {
@@ -12,7 +13,7 @@ const DisplayClips = ({ clips }) => {
                     <div key={index} style={{ margin: '1rem' }} >
                         <div style={styles.center} >
                             <iframe
-                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=${domainIframe}`}
+                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=${parentDomain}`}
                                 height="720"
                                 width="1280"
                                 allowFullScreen
