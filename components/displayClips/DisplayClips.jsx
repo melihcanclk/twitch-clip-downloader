@@ -12,16 +12,14 @@ const DisplayClips = ({ clips }) => {
                 clips.map((clip, index) => (
                     <div key={index} style={{ margin: '1rem' }} >
                         <div style={styles.center} >
-                            <iframe
-                                src={`https://clips.twitch.tv/embed?clip=${clip.id}&muted=false&parent=${parentDomain}`}
-                                height="720"
-                                width="1280"
-                                allowFullScreen
-                            >
-                            </iframe>
+                            <img 
+                                src={clip.thumbnail_url}
+                                alt={clip.title}
+                                style={{ width: '100%', height: 'auto' }}
+                            />
                         </div>
                         <div style={styles.center}>
-                            <p>{clip.title}</p>3
+                            <p>{clip.title}</p>
                         </div>
                         <div style={styles.center}>
                             <p>Number of views: {clip.view_count}</p>
