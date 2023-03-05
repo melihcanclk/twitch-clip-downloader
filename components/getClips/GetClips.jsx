@@ -13,7 +13,6 @@ import { DisplayError } from '@/components/displayClips/DisplayError';
 export const GetClips = ({ clips, loading, error, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
     const [value, setValue] = React.useState(0);
-
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {

@@ -4,7 +4,7 @@ import { downloadClips } from '@/components/twitch/downloadClips'
 import { domain, node_env } from '@/pages/index'
 
 const DisplayClips = ({ clips }) => {
-    const parentDomain = node_env === 'development' ? 'localhost' : domain.replace('https://', '').slice(0, -1)
+    // const parentDomain = node_env === 'development' ? 'localhost' : domain.replace('https://', '').slice(0, -1)
 
     return (
         <div>
@@ -12,11 +12,17 @@ const DisplayClips = ({ clips }) => {
                 clips.map((clip, index) => (
                     <div key={index} style={{ margin: '1rem' }} >
                         <div style={styles.center} >
-                            <img 
-                                src={clip.thumbnail_url}
-                                alt={clip.title}
-                                style={{ width: '100%', height: 'auto' }}
-                            />
+                            <a href={
+                                clip.url
+                            }
+                                target="_blank"
+                            >
+                                <img
+                                    src={clip.thumbnail_url}
+                                    alt={clip.title}
+                                    style={{ width: '100%', height: 'auto' }}
+                                />
+                            </a>
                         </div>
                         <div style={styles.center}>
                             <p>{clip.title}</p>

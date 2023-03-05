@@ -6,6 +6,18 @@ export const useGetFollowedTwitch = () => {
 
     const [followedTwitch, setFollowedTwitch] = React.useState([]);
 
+    const sortFollowedTwitch = (followedTwitch) => {
+        return [...followedTwitch].sort((a, b) => {
+            if (a.to_login > b.to_login) {
+                return 1;
+            }
+            if (a.to_login < b.to_login) {
+                return -1;
+            }
+            return 0;
+        })
+    }
+
     useEffect(() => {
         // get followed users from twitch api
         async function getFollowedTwitch() {
@@ -21,7 +33,7 @@ export const useGetFollowedTwitch = () => {
                 )
                 followedTwitch = [...followedTwitch, ...response.data]
             }
-            setFollowedTwitch([...followedTwitch]);
+            setFollowedTwitch(sortFollowedTwitch(followedTwitch));
         }
         getFollowedTwitch();
     }, [])
