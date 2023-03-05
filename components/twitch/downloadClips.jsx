@@ -4,8 +4,8 @@ export const downloadClips = (clip) => {
     a.href = clip.thumbnail_url.replace('-preview-480x272.jpg', '.mp4');
     a.download = clip.thumbnail_url.replace('-preview-480x272.jpg', '.mp4');
     navigator.clipboard.writeText(
-        clip.title + ' - ' + clip.broadcaster_name
+        clip.broadcaster_name + ' - ' + clip.title
     )
-   
+
     a.click()
 }
