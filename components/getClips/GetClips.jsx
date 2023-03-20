@@ -22,7 +22,7 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
             const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
             const game_id = game.data[0].id;
             const today = new Date();
-            const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+            const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
             // TODO : add pagination
             fetchData(
