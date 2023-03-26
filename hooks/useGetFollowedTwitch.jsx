@@ -21,7 +21,7 @@ export const useGetFollowedTwitch = () => {
     useEffect(() => {
         // get followed users from twitch api
         async function getFollowedTwitch() {
-            const userID = await convertUserNameToID('femespor');
+            const userID = await convertUserNameToID('eldress__');
             let followedTwitch = []
             let response = await fetchData(
                 `https://api.twitch.tv/helix/users/follows?from_id=${userID}&first=100`
