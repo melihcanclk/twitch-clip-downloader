@@ -28,7 +28,11 @@ export const DisplayError = ({ clips, loading, error }) => {
                             clips.length > 0 ?
                                 <DisplayClips clips={clips} />
                                 :
-                                <div>No clips found</div>
+                                <div style={{
+                                    width: '100%',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                }}>No clips found</div>
                     )
             }
         </div>

@@ -57,9 +57,6 @@ export const styles = {
         alignItems: "center",
         justifyContent: "center",
     },
-    tab: {
-        color: "white",
-    },
     form: {
         display: "flex",
         flexDirection: "column",

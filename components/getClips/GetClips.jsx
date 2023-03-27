@@ -9,10 +9,13 @@ import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
 import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
+import NativeSelect from '@mui/material/NativeSelect';
 
 export const GetClips = ({ clips, loading, error, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
     const [value, setValue] = React.useState(0);
+    const [day, setDay] = React.useState(3);
+
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {
@@ -22,11 +25,11 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
             const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
             const game_id = game.data[0].id;
             const today = new Date();
-            const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 3);
+            const oneWeekBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day);
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
             // TODO : add pagination
             fetchData(
-                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=20&started_at=${oneWeekBeforeISO}`
+                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=50&started_at=${oneWeekBeforeISO}`
             ).then(res => {
                 setClips(res.data.filter(clip => clip.game_id === game_id));
                 setLoading(false);
@@ -38,7 +41,7 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
         if (streamers.length > 0) {
             getClips();
         }
-    }, [value, streamers])
+    }, [value, streamers, day])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -46,12 +49,37 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
 
     return (
         <Box sx={{ maxWidth: '1100px' }}>
+            <Box style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '10px 0'
+            }}>
+                <NativeSelect
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                    name="type"
+                    inputProps={{ 'aria-label': 'type' }}
+                >
+                    <option value={3}>3 Days</option>
+                    <option value={4}>4 Days</option>
+                    <option value={7}>1 Week</option>
+                </NativeSelect>
+                <p style={{ fontSize: '1.5rpm' }}>
+                    Number of streamers : {streamers.length}
+                </p>
+            </Box>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
             <Tabs
                 value={value}
                 onChange={handleChange}
                 variant="scrollable"
+                textColor="black"
+                TabIndicatorProps={{
+                    style: {
+                        backgroundColor: "#000"
+                    }
+                }}
                 scrollButtons="auto"
-                aria-label="scrollable auto tabs example"
             >
                 {
                     streamers.map((entry, index) => (
