@@ -11,13 +11,16 @@ export const TwitchClipsFromApi = () => {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false)
     const [day, setDay] = React.useState(3);
+    const [numberOfClips, setNumberOfClips] = React.useState(20);
+
 
     return (
         <ScrollToTopComponent        >
-            <Title title={"Search User Clips from Twitch API"} streamers={twitchStreamers} setDay={setDay} />
+            <Title title={"Search User Clips from Twitch API"} streamers={twitchStreamers} setDay={setDay} setNumberOfClips={setNumberOfClips} />
             <GetClips
                 clips={clips}
                 day={day}
+                numberOfClips={numberOfClips}
                 loading={loading}
                 error={error}
                 setClips={setClips}

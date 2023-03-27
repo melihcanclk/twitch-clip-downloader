@@ -11,7 +11,7 @@ import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
 import NativeSelect from '@mui/material/NativeSelect';
 
-export const GetClips = ({ clips, loading, error, day, setClips, setLoading, setError, streamers, type }) => {
+export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
     const [value, setValue] = React.useState(0);
 
@@ -28,7 +28,7 @@ export const GetClips = ({ clips, loading, error, day, setClips, setLoading, set
             const oneWeekBeforeISO = oneWeekBefore.toISOString();
             // TODO : add pagination
             fetchData(
-                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=50&started_at=${oneWeekBeforeISO}`
+                `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${oneWeekBeforeISO}`
             ).then(res => {
                 setClips(res.data.filter(clip => clip.game_id === game_id));
                 setLoading(false);
@@ -40,7 +40,7 @@ export const GetClips = ({ clips, loading, error, day, setClips, setLoading, set
         if (streamers.length > 0) {
             getClips();
         }
-    }, [value, streamers, day])
+    }, [value, streamers, day, numberOfClips])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
