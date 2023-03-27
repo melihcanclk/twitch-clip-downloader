@@ -11,10 +11,9 @@ import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
 import NativeSelect from '@mui/material/NativeSelect';
 
-export const GetClips = ({ clips, loading, error, setClips, setLoading, setError, streamers, type }) => {
+export const GetClips = ({ clips, loading, error, day, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
     const [value, setValue] = React.useState(0);
-    const [day, setDay] = React.useState(3);
 
     useEffect(() => {
         // when value changes, get clips using entry username
@@ -49,25 +48,7 @@ export const GetClips = ({ clips, loading, error, setClips, setLoading, setError
 
     return (
         <Box sx={{ maxWidth: '1100px' }}>
-            <Box style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                padding: '10px 0'
-            }}>
-                <NativeSelect
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                    name="type"
-                    inputProps={{ 'aria-label': 'type' }}
-                >
-                    <option value={3}>3 Days</option>
-                    <option value={4}>4 Days</option>
-                    <option value={7}>1 Week</option>
-                </NativeSelect>
-                <p style={{ fontSize: '1.5rpm' }}>
-                    Number of streamers : {streamers.length}
-                </p>
-            </Box>
+
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
             <Tabs
                 value={value}

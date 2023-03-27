@@ -1,25 +1,24 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import fetchData from '@/components/twitch/fetch';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import { styles } from '@/styles/styles';
 
-export const SelectUserClips = ({ setClips, setLoading, setError }) => {
+export const SelectUserClips = ({ day, numberOfClips, setClips, setLoading, setError }) => {
     const usernameRef = React.useRef();
 
     const clearClips = () => {
         setClips([]);
     }
 
-    const onSubmitSearch = async (e) => {
-        e.preventDefault();
+    // async get clips from twitch api
+    const getClips = async (username) => {
         setLoading(true);
-        const username = usernameRef.current.value;
         const userID = await convertUserNameToID(username);
         const today = new Date();
-        const oneWeekBeforeISO = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7).toISOString();
+        const oneWeekBeforeISO = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day).toISOString();
 
         fetchData(
-            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=40&started_at=${oneWeekBeforeISO}`
+            `https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${oneWeekBeforeISO}`
         ).then(clips => {
             setClips(clips.data);
         }).catch(err => {
@@ -27,6 +26,22 @@ export const SelectUserClips = ({ setClips, setLoading, setError }) => {
         }).finally(() => {
             setLoading(false);
         });
+    }
+
+    useEffect(() => {
+        // when value changes, get clips using entry username
+        const username = usernameRef.current.value;
+        if (username)
+            getClips(username);
+
+    }, [day, numberOfClips])
+
+    const onSubmitSearch = async (e) => {
+        e.preventDefault();
+        const username = usernameRef.current.value;
+        if (username) {
+            getClips(username);
+        }
     }
 
     return (

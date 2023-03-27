@@ -16,7 +16,9 @@ export const ScrollToTopComponent = ({ children, title }) => {
                 accessToken ?
                     (
                         <div>
-                            <h1 id="scroll-to-top" className="spinner-container">{title}</h1>
+                            <div>
+                                <h1 id="scroll-to-top">{ }</h1>
+                            </div>
                             {children}
                             <ScrollToTopButton />
                         </div >
