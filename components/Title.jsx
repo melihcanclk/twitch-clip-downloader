@@ -17,7 +17,7 @@ export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, set
                     alignItems: 'center',
                     padding: '0 30px'
                 }}>
-                    <NativeSelect
+                    {/* <NativeSelect
                         value={day}
                         onChange={(e) => setDay(parseInt(e.target.value))}
                         name="type"
@@ -26,13 +26,15 @@ export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, set
                         <option value={3}>3 Days</option>
                         <option value={4}>4 Days</option>
                         <option value={7}>1 Week</option>
-                    </NativeSelect>
+                    </NativeSelect> */}
                     <div style={{
-                        padding: '0 30px'
+                        width: '100%',
                     }}>
-                        <h1 className="spinner-container">{title}</h1>
+                        <h1 style={
+                            styles.center
+                        }>{title}</h1>
                     </div>
-                    <NativeSelect
+                    {/* <NativeSelect
                         value={numberOfClips}
                         onChange={(e) => setNumberOfClips(parseInt(e.target.value))}
                         name="type"
@@ -42,7 +44,7 @@ export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, set
                         <option value={30}>30</option>
                         <option value={40}>40</option>
                         <option value={50}>50</option>
-                    </NativeSelect>
+                    </NativeSelect> */}
                 </div>
 
                 {

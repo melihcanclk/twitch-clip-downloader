@@ -21,7 +21,7 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
         // hold streamers in buffer with limit of 20
         const buffer = [];
         for (let i = 0; i < streamers.length; i++) {
-            if (buffer.length < 20) {
+            if (buffer.length < 100) {
                 buffer.push(streamers[i]);
             } else {
                 // get clips for each streamer in buffer
@@ -55,6 +55,10 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
 
     // when numberofclips or day changes, get clips
     useEffect(() => {
+        // cancel if there is a search in progress
+        if (loading) {
+            return;
+        }
         setClips([]);
         if (streamers.length > 0) {
             getClips();
