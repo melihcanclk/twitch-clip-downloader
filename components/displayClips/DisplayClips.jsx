@@ -21,9 +21,9 @@ const DisplayClips = ({ clips }) => {
         < div >
             {
                 <Box sx={{ flexGrow: 1 }}>
-                    <Grid container spacing={{ xs: 2, md: 3 }} >
+                    <Grid container justifyContent={"center"} spacing={{ xs: 2, md: 3 }} >
                         {clips.map((clip, index) => (
-                            <Grid item xs={12} sm={4} md={3} lg={2}  key={index}>
+                            <Grid item xs={12} sm={4} md={3} lg={2} key={index}>
                                 <Item>{
                                     // streamer name, clip title, clip url, clip thumbnail
                                     <div key={index} style={{ margin: '1rem' }} >
