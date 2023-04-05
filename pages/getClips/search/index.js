@@ -14,7 +14,7 @@ export const SearchClips = () => {
 
     return (
         <ScrollToTopComponent>
-            <Title title={"Search By Name"} setDay={setDay} setNumberOfClips={setNumberOfClips} />
+            <Title title={"Search By Name"} day={day} setDay={setDay} numberOfClips={numberOfClips} setNumberOfClips={setNumberOfClips} />
             <SelectUserClips day={day} setClips={setClips} numberOfClips={numberOfClips} setLoading={setLoading} setError={setError} />
             <DisplayError loading={loading} error={error} clips={clips} />
         </ScrollToTopComponent >

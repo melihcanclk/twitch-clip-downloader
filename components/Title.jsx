@@ -2,7 +2,7 @@ import React from 'react'
 import NativeSelect from '@mui/material/NativeSelect';
 import { styles } from '@/styles/styles';
 
-export const Title = ({ title, streamers, setDay, setNumberOfClips }) => {
+export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, setNumberOfClips }) => {
 
     return (
 
@@ -15,8 +15,10 @@ export const Title = ({ title, streamers, setDay, setNumberOfClips }) => {
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center',
+                    padding: '0 30px'
                 }}>
                     <NativeSelect
+                        value={day}
                         onChange={(e) => setDay(parseInt(e.target.value))}
                         name="type"
                         inputProps={{ 'aria-label': 'type' }}
@@ -31,6 +33,7 @@ export const Title = ({ title, streamers, setDay, setNumberOfClips }) => {
                         <h1 className="spinner-container">{title}</h1>
                     </div>
                     <NativeSelect
+                        value={numberOfClips}
                         onChange={(e) => setNumberOfClips(parseInt(e.target.value))}
                         name="type"
                         inputProps={{ 'aria-label': 'type' }}
@@ -46,6 +49,12 @@ export const Title = ({ title, streamers, setDay, setNumberOfClips }) => {
                     streamers &&
                     <p style={{ ...styles.searchComponent, fontSize: '1.5rem' }}>
                         Number of streamers : {streamers.length}
+                    </p>
+                }
+                {
+                    numberOfClips &&
+                    <p style={{ ...styles.searchComponent, fontSize: '1.5rem' }}>
+                        Number of clips : {clips.length}
                     </p>
                 }
             </div>

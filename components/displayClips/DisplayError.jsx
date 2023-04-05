@@ -1,7 +1,7 @@
 import React from 'react';
 import DisplayClips from '@/components/displayClips/DisplayClips';
 
-export const DisplayError = ({ clips, loading, error }) => {
+export const DisplayError = ({ clips, value, loading, error }) => {
     return (
         <div >
             {
@@ -26,7 +26,7 @@ export const DisplayError = ({ clips, loading, error }) => {
                             </div>
                             :
                             clips.length > 0 ?
-                                <DisplayClips clips={clips} />
+                                <DisplayClips value={value} clips={clips} />
                                 :
                                 <div style={{
                                     width: '100%',
