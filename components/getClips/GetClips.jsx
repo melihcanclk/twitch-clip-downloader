@@ -1,15 +1,9 @@
 import React, { useEffect } from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import { styles } from '@/styles/styles';
-import { a11yProps } from '@/components/TabPanel/a11yProps';
-import { TabPanel } from '@/components/TabPanel/TabPanel';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
 import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
-import NativeSelect from '@mui/material/NativeSelect';
 
 export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, setLoading, setError, streamers, type }) => {
     // get users from firebase
@@ -18,52 +12,38 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
     async function getClips() {
         setLoading(true);
         setError(false);
-        // hold streamers in buffer with limit of 20
-        const buffer = [];
-        for (let i = 0; i < streamers.length; i++) {
-            if (buffer.length < 100) {
-                buffer.push(streamers[i]);
-            } else {
-                // get clips for each streamer in buffer
-                for (let j = 0; j < buffer.length; j++) {
-                    const userID = await convertUserNameToID(type === TypeOfClip.FIREBASE ? buffer[j].username : buffer[j].to_name);
-                    const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
-                    const game_id = game.data[0].id;
-                    const today = new Date();
-                    const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day);
-                    const dayBeforeISO = dayBefore.toISOString();
-                    // TODO : add pagination
-                    try {
-                        const clipArray = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
-                        // filter clips that are not from valorant
+        let buffer = [];
+        const BUFFER_SIZE = 100;
+        // fill buffer with 100 streamers in every iteration
+        // and get clips for each streamer
+        for (let i = 0; i < streamers.length; i += BUFFER_SIZE) {
+            buffer.push(streamers.slice(i, i + BUFFER_SIZE));
+        }
+        // get clips for each streamer in buffer
+        for (let j = 0; j < buffer.length; j++) {
+            for (let k = 0; k < buffer[j].length; k++) {
+                const userID = await convertUserNameToID(type === TypeOfClip.FIREBASE ? buffer[j][k].username : buffer[j][k].to_name);
+                const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
+                const game_id = game.data[0].id;
+                const today = new Date();
+                const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day);
+                const dayBeforeISO = dayBefore.toISOString();
+                // TODO : add pagination
+                try {
+                    const clipArray = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
+                    // filter clips that are not from valorant
+                    if (clipArray.data.length > 0) {
                         const filteredClips = clipArray.data.filter(clip => clip.game_id === game_id);
-                        if (clipArray.data.length > 0) {
-                            setClips(prevState => [...prevState, ...filteredClips]);
-                        }
-                        setLoading(false);
+                        setClips(prevState => [...prevState, ...filteredClips]);
                     }
-                    catch (err) {
-                        setError(true);
-                    }
+                    setLoading(false);
                 }
-                // empty buffer
-                buffer.length = 0;
+                catch (err) {
+                    setError(true);
+                }
             }
         }
-
     }
-
-    // when numberofclips or day changes, get clips
-    useEffect(() => {
-        // cancel if there is a search in progress
-        if (loading) {
-            return;
-        }
-        setClips([]);
-        if (streamers.length > 0) {
-            getClips();
-        }
-    }, [numberOfClips, day])
 
     useEffect(() => {
         // when value changes, get clips using entry username
@@ -72,9 +52,6 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
         }
     }, [streamers, day, numberOfClips])
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
     return (
         <Box sx={{
             width: '100%',
