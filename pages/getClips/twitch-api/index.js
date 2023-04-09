@@ -11,7 +11,7 @@ export const TwitchClipsFromApi = () => {
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false)
     const [day, setDay] = React.useState(7);
-    const [numberOfClips, setNumberOfClips] = React.useState(50);
+    const [numberOfClips, setNumberOfClips] = React.useState(20);
 
 
     return (
