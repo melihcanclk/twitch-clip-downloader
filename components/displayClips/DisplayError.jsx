@@ -25,7 +25,7 @@ export const DisplayError = ({ clips, value, loading, error }) => {
                                 Error while loading clips
                             </div>
                             :
-                            clips.length > 0 ?
+                            Object.keys(clips).length > 0 ?
                                 <DisplayClips value={value} clips={clips} />
                                 :
                                 <div style={{

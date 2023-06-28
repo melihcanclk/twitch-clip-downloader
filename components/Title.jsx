@@ -56,7 +56,7 @@ export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, set
                 {
                     numberOfClips &&
                     <p style={{ ...styles.searchComponent, fontSize: '1.5rem' }}>
-                        Number of clips : {clips.length}
+                        Number of clips : {Object.keys(clips).length}
                     </p>
                 }
             </div>
