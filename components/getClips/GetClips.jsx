@@ -52,7 +52,7 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
         if (streamers.length > 0) {
             getClips();
         }
-    }, [streamers])
+    }, [streamers, streamerBuffer])
 
     return (
         <Box sx={{
