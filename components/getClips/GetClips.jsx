@@ -17,6 +17,7 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
             // buffer.push(streamers.slice(i, i + BUFFER_SIZE));
             setStreamerBuffer((prev) => [...prev, streamers.slice(i, i + BUFFER_SIZE)]);
         }
+        console.log({ streamerBuffer })
         // get clips for each streamer in buffer
         for (let j = 0; j < streamerBuffer.length; j++) {
             for (let k = 0; k < streamerBuffer[j].length; k++) {
@@ -30,6 +31,7 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
                 // TODO : add pagination
                 try {
                     const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
+                    console.log({ data })
                     // filter clips that are not from valorant
                     if (data.length > 0) {
                         const filteredClips = data.filter(clip => clip.game_id === game_id).slice(0, 3);
