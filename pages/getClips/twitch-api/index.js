@@ -12,7 +12,7 @@ export const TwitchClipsFromApi = () => {
     const [clips, setClips] = React.useState({});
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(false)
-    const [day, setDay] = React.useState(6);
+    const [day, setDay] = React.useState(0);
     const [numberOfClips, setNumberOfClips] = React.useState(20);
 
     const sortFollowedTwitch = (followedTwitch) => {
