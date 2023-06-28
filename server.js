@@ -5,9 +5,12 @@ const fs = require("fs");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
+// to run with https, you need to create a cert and key file
+// you can use openssl to create them
+//https://stackoverflow.com/a/56074120
 const httpsOptions = {
-  key: fs.readFileSync("./cert/example.com+5-key.pem"),
-  cert: fs.readFileSync("./cert/example.com+5.pem"),
+  key: fs.readFileSync("./cert/localhost.key"),
+  cert: fs.readFileSync("./cert/localhost.crt"),
 };
 app.prepare().then(() => {
   createServer(httpsOptions, (req, res) => {
