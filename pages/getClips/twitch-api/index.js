@@ -10,22 +10,8 @@ import fetchData from '@/components/twitch/fetch';
 export const TwitchClipsFromApi = () => {
     const [followedTwitch, setFollowedTwitch] = React.useState([]);
     const [clips, setClips] = React.useState({});
-    const [loading, setLoading] = React.useState(false);
-    const [error, setError] = React.useState(false)
-    const [day, setDay] = React.useState(6);
+    const [day, setDay] = React.useState(1);
     const [numberOfClips, setNumberOfClips] = React.useState(20);
-
-    const sortFollowedTwitch = (followedTwitch) => {
-        return [...followedTwitch].sort((a, b) => {
-            if (a.to_login > b.to_login) {
-                return 1;
-            }
-            if (a.to_login < b.to_login) {
-                return -1;
-            }
-            return 0;
-        })
-    }
 
     useEffect(() => {
         // get followed users from twitch api
@@ -35,14 +21,15 @@ export const TwitchClipsFromApi = () => {
             let response = await fetchData(
                 `https://api.twitch.tv/helix/users/follows?from_id=${userID}&first=100`
             )
-            followedTwitch = [...followedTwitch, ...response.data]
+            followedTwitch = [...followedTwitch, response.data]
+
             while (response.pagination.cursor) {
                 response = await fetchData(
                     `https://api.twitch.tv/helix/users/follows?from_id=${userID}&first=100&after=${response.pagination.cursor}`
                 )
-                followedTwitch = [...followedTwitch, ...response.data]
+                followedTwitch = [...followedTwitch, response.data]
             }
-            setFollowedTwitch(sortFollowedTwitch(followedTwitch));
+            setFollowedTwitch(followedTwitch);
         }
         getFollowedTwitch();
     }, [])
@@ -61,11 +48,7 @@ export const TwitchClipsFromApi = () => {
                 clips={clips}
                 day={day}
                 numberOfClips={numberOfClips}
-                loading={loading}
-                error={error}
                 setClips={setClips}
-                setLoading={setLoading}
-                setError={setError}
                 streamers={followedTwitch}
                 type={TypeOfClip.TWITCH}
             />
