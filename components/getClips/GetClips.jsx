@@ -9,18 +9,17 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
     // get users from firebase
     const [streamerBuffer, setStreamerBuffer] = React.useState([]);
 
-
-
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {
+            console.log("getClips")
             setLoading(true);
             setError(false);
             const BUFFER_SIZE = 100;
             for (let i = 0; i < streamers.length; i += BUFFER_SIZE) {
-                // buffer.push(streamers.slice(i, i + BUFFER_SIZE));
+                // fill buffer with streamers
                 setStreamerBuffer((prev) => [...prev, streamers.slice(i, i + BUFFER_SIZE)]);
-            }
+            }   
             console.log({ streamerBuffer })
             // get clips for each streamer in buffer
             for (let j = 0; j < streamerBuffer.length; j++) {
