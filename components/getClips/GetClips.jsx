@@ -11,7 +11,6 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
     useEffect(() => {
         // when value changes, get clips using entry username
         async function getClips() {
-            console.log("getClips")
             // get clips for each streamer in buffer
             for (let j = 0; j < streamers.length; j++) {
                 for (let k = 0; k < streamers[j].length; k++) {
@@ -25,7 +24,6 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
                     // TODO : add pagination
                     try {
                         const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
-                        console.log({ data })
                         // filter clips that are not from valorant
                         if (data.length > 0) {
                             const filteredClips = data.filter(clip => clip.game_id === game_id).slice(0, 3);
