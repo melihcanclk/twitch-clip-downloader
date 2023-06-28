@@ -48,6 +48,7 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
 
     useEffect(() => {
         // when value changes, get clips using entry username
+        console.log({ streamers })
         if (streamers.length > 0) {
             getClips();
         }
@@ -57,10 +58,8 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
         <Box sx={{
             width: '100%',
         }}>
-
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
             <DisplayError loading={loading} error={error} clips={clips} />
-
         </Box>
     )
 }
