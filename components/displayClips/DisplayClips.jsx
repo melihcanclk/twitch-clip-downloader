@@ -64,7 +64,7 @@ const DisplayClips = ({ clips }) => {
                     <Grid container justifyContent={"center"} spacing={{ xs: 2, md: 3 }} >
                         {
                             // for each streamer, display clips
-                            Object.keys(clips).map((streamer, index) => {
+                            Object.keys(clips).map((streamer) => {
                                 return (
                                     clips[streamer].map((clip, index) => {
                                         return (
