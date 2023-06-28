@@ -13,14 +13,12 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
         // when value changes, get clips using entry username
         async function getClips() {
             console.log("getClips")
-            setLoading(true);
-            setError(false);
             const BUFFER_SIZE = 100;
             for (let i = 0; i < streamers.length; i += BUFFER_SIZE) {
-                // fill buffer with streamers
+                // fill streamerBuffer with BUFFER_SIZE chunks of streamers
                 setStreamerBuffer((prev) => [...prev, streamers.slice(i, i + BUFFER_SIZE)]);
-            }   
-            console.log({ streamerBuffer })
+                console.log({ streamerBuffer })
+            }
             // get clips for each streamer in buffer
             for (let j = 0; j < streamerBuffer.length; j++) {
                 for (let k = 0; k < streamerBuffer[j].length; k++) {
