@@ -29,10 +29,11 @@ export const GetClips = ({ clips, loading, error, day, numberOfClips, setClips, 
                 const dayBeforeISO = dayBefore.toISOString();
                 // TODO : add pagination
                 try {
-                    const clipArray = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
+                    const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
                     // filter clips that are not from valorant
-                    if (clipArray.data.length > 0) {
-                        const filteredClips = clipArray.data.filter(clip => clip.game_id === game_id).slice(0, 3);
+                    if (data.length > 0) {
+                        const filteredClips = data.filter(clip => clip.game_id === game_id).slice(0, 10);
+                        console.log(filteredClips)
                         // setClips with username as key and clips as value
                         setClips((prev) => ({ ...prev, [username]: filteredClips }));
                     }
