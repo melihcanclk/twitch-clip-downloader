@@ -26,7 +26,8 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
                         const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
                         // filter clips that are not from valorant
                         if (data.length > 0) {
-                            const filteredClips = data.filter(clip => clip.game_id === game_id).slice(0, 5);
+                            const filteredClips = data.filter(clip => clip.game_id === game_id);
+                            //.slice(0, 10)
                             // setClips with username as key and clips as value
                             setClips((prev) => ({ ...prev, [username]: filteredClips }));
                         }
