@@ -42,6 +42,12 @@ const StreamerItem = ({ clip, index }) => {
                 <div style={styles.center}>
                     <p>Number of views: {clip.view_count}</p>
                 </div>
+                <div>
+                    <>Created at: {
+                        // convert to local time with turkey timezone
+                        new Date(clip.created_at).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })
+                    } </>
+                </div>
                 <div style={styles.center}>
                     <button style={styles.btn} onClick={() => {
                         navigator.clipboard.writeText(`https://clips.twitch.tv/${clip.id}`).then(() => {

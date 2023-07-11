@@ -2,7 +2,7 @@ import React from 'react'
 import NativeSelect from '@mui/material/NativeSelect';
 import { styles } from '@/styles/styles';
 
-export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, setNumberOfClips }) => {
+export const Title = ({ title, streamers, clips, numberOfClips }) => {
 
     return (
 
@@ -50,7 +50,7 @@ export const Title = ({ title, streamers, clips, day, setDay, numberOfClips, set
                 {
                     streamers &&
                     <p style={{ ...styles.searchComponent, fontSize: '1.5rem' }}>
-                        Number of streamers : {streamers.length}
+                        Number of streamers : {Object.keys(streamers).map((streamer) => streamers[streamer].length).reduce((a, b) => a + b, 0)}
                     </p>
                 }
                 {

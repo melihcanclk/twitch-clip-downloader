@@ -10,8 +10,7 @@ import fetchData from '@/components/twitch/fetch';
 export const TwitchClipsFromApi = () => {
     const [followedTwitch, setFollowedTwitch] = React.useState([]);
     const [clips, setClips] = React.useState({});
-    const [day, setDay] = React.useState(1);
-    const [numberOfClips, setNumberOfClips] = React.useState(20);
+    const [numberOfClips, setNumberOfClips] = React.useState(0);
 
     useEffect(() => {
         // get followed users from twitch api
@@ -38,17 +37,14 @@ export const TwitchClipsFromApi = () => {
         <ScrollToTopComponent        >
             <Title title={"Search User Clips from Twitch API"}
                 streamers={followedTwitch}
-                day={day}
-                setDay={setDay}
                 clips={clips}
                 numberOfClips={numberOfClips}
-                setNumberOfClips={setNumberOfClips}
             />
             <GetClips
                 clips={clips}
-                day={day}
                 numberOfClips={numberOfClips}
                 setClips={setClips}
+                setNumberOfClips={setNumberOfClips}
                 streamers={followedTwitch}
                 type={TypeOfClip.TWITCH}
             />

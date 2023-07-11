@@ -4,8 +4,10 @@ import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
 import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
+import DisplayClips from '../displayClips/DisplayClips';
 
-export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type }) => {
+export const GetClips = ({ clips, setClips, streamers, type, setNumberOfClips }) => {
+
     // get users from firebase
 
     useEffect(() => {
@@ -19,14 +21,17 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
                     const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
                     const game_id = game.data[0].id;
                     const today = new Date();
-                    const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - day);
+                    // same hour yesterday
+                    const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours(), today.getMinutes(), today.getSeconds());
                     const dayBeforeISO = dayBefore.toISOString();
                     // TODO : add pagination
                     try {
-                        const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&first=${numberOfClips}&started_at=${dayBeforeISO}`);
+                        const { data } = await fetchData(`https://api.twitch.tv/helix/clips?broadcaster_id=${userID}&started_at=${dayBeforeISO}`);
                         // filter clips that are not from valorant
                         if (data.length > 0) {
                             const filteredClips = data.filter(clip => clip.game_id === game_id);
+                            setNumberOfClips((prev) => prev + filteredClips.length);
+
                             //.slice(0, 10)
                             // setClips with username as key and clips as value
                             setClips((prev) => ({ ...prev, [username]: filteredClips }));
@@ -38,9 +43,7 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
                 }
             }
         }
-        if (streamers.length > 0) {
-            getClips();
-        }
+        getClips();
     }, [streamers])
 
     return (
@@ -48,7 +51,7 @@ export const GetClips = ({ clips, day, numberOfClips, setClips, streamers, type 
             width: '100%',
         }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
-            <DisplayError clips={clips} />
+            <DisplayClips clips={clips} />
         </Box>
     )
 }
