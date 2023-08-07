@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
@@ -6,7 +6,7 @@ import { TypeOfClip } from '@/components/TypeOfClip';
 import { DisplayError } from '@/components/displayClips/DisplayError';
 import DisplayClips from '../displayClips/DisplayClips';
 
-export const GetClips = ({ clips, setClips, streamers, type, setNumberOfClips }) => {
+export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setNumberOfClips }) => {
 
     // get users from firebase
 
@@ -32,7 +32,6 @@ export const GetClips = ({ clips, setClips, streamers, type, setNumberOfClips })
                             const filteredClips = data.filter(clip => clip.game_id === game_id);
                             setNumberOfClips((prev) => prev + filteredClips.length);
 
-                            //.slice(0, 10)
                             // setClips with username as key and clips as value
                             setClips((prev) => ({ ...prev, [username]: filteredClips }));
                         }
@@ -45,6 +44,16 @@ export const GetClips = ({ clips, setClips, streamers, type, setNumberOfClips })
         }
         getClips();
     }, [streamers])
+
+    useEffect(() => {
+        // when number of clips changes, slice clips
+        const slicedClips = Object.keys(clips).reduce((acc, key) => {
+            acc[key] = clips[key].slice(0, numberOfClips);
+            return acc;
+        }, {});
+        setClips(slicedClips);
+    }, [numberOfClips])
+
 
     return (
         <Box sx={{
