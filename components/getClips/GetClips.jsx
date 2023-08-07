@@ -16,7 +16,14 @@ export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setN
             // get clips for each streamer in buffer
             for (let j = 0; j < streamers.length; j++) {
                 for (let k = 0; k < streamers[j].length; k++) {
-                    const username = (type === TypeOfClip.FIREBASE ? streamers[j][k].username : streamers[j][k].to_name);
+                    let username = '';
+                    if (type === TypeOfClip.FIREBASE) {
+                        username = streamers[j][k].username;
+                    } else if (type === TypeOfClip.TWITCH) {
+                        username = streamers[j][k].to_login;
+                    } else { // following
+                        username = streamers[j][k].broadcaster_login;
+                    }
                     const userID = await convertUserNameToID(username);
                     const game = await fetchData(`https://api.twitch.tv/helix/games?name=Valorant`)
                     const game_id = game.data[0].id;

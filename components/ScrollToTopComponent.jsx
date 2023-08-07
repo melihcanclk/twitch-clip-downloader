@@ -26,7 +26,7 @@ export const ScrollToTopComponent = ({ children, title }) => {
                     :
                     (
                         <div style={styles.connectTwitch}>
-                            <a href={`https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${twitchClientID}&redirect_uri=${domain}&scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls`}>Connect with Twitch</a>
+                            <a href={`https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=${twitchClientID}&redirect_uri=${domain}&scope=openid+user:read:email+user:read:follows&claims={"id_token":{"email_verified":null},"userinfo":{"username":null,"picture":null}}`}>Connect with Twitch</a>
                         </div>
                     )
             }
