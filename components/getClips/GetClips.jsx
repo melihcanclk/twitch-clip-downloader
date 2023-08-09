@@ -3,12 +3,10 @@ import { convertUserNameToID } from '@/components/twitch/convertUsernameToID';
 import fetchData from '@/components/twitch/fetch';
 import { Box } from '@mui/system';
 import { TypeOfClip } from '@/components/TypeOfClip';
-import { DisplayError } from '@/components/displayClips/DisplayError';
 import DisplayClips from '../displayClips/DisplayClips';
 
 export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setNumberOfClips }) => {
 
-    // get users from firebase
 
     useEffect(() => {
         // when value changes, get clips using entry username
