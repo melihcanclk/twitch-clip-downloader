@@ -8,25 +8,27 @@ export const domain = node_env === 'development' ? 'https://localhost:3000' : 'h
 
 const Home = () => {
 
-  const [access_token] = useGetAccessToken();
-
   useEffect(() => {
     // get user info from twitch api using claims
     async function getUserInfo() {
+
+      // get access token
+      const access_token = localStorage.getItem('access_token')
+      if (!access_token) return;
+      
       const response = await fetch("https://id.twitch.tv/oauth2/userinfo", {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+          'Authorization': `Bearer ${access_token}`
         }
       })
       const resp = await response.json()
-      // save response to local storage
 
       // get user from id
       const response2 = await fetch(`https://api.twitch.tv/helix/users?id=${resp.sub}`, {
         method: 'GET',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
+          'Authorization': `Bearer ${access_token}`,
           'Client-Id': process.env.TWITCH_CLIENT_ID
         }
       })
@@ -42,8 +44,7 @@ const Home = () => {
         }
       ))
     }
-    if (access_token)
-      getUserInfo();
+    getUserInfo();
 
   }, [])
 
