@@ -5,6 +5,7 @@ import { domain, node_env } from '@/pages/index'
 import { Grid, Box } from '@mui/material'
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { Loader } from '../loader/Loader'
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -63,12 +64,17 @@ const StreamerItem = ({ clip, index }) => {
 
 const DisplayClips = ({ clips }) => {
     // const parentDomain = node_env === 'development' ? 'localhost' : domain.replace('https://', '').slice(0, -1)
+    // get if there is any array in clips object that has length > 0
+    const hasClips = Object.keys(clips).some((streamer) => {
+        return clips[streamer].length > 0
+    })
+    console.log('hasClips', hasClips)
     return (
         < div >
             {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container justifyContent={"center"} spacing={{ xs: 2, md: 3 }} >
-                        {
+                        {hasClips ? (
                             // for each streamer, display clips
                             Object.keys(clips).map((streamer) => {
                                 return (
@@ -82,6 +88,17 @@ const DisplayClips = ({ clips }) => {
                                 )
                             }
                             )
+                        ) : (
+                            <Box sx={{
+                                position: 'fixed',
+                                top: '50%',
+                                left: '50%',
+                            }}>
+                                <Grid item xs={12} md={12}>
+                                    <Loader />
+                                </Grid>
+                            </Box>
+                        )
 
                         }
                     </Grid>
