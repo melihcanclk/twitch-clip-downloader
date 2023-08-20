@@ -8,7 +8,7 @@ const GetClipsIndex = () => {
             <div style={styles.body} className='spinner-container height-100' >
                 {/* <a style={styles.btnInner} href={`/getClips/search`}>Search</a> */}
                 {/* <a style={styles.btnInner} href={`/getClips/firebase`}>Firebase</a> */}
-                <a style={styles.btnInner} href={`/getClips/twitch-api`}>Twitch API</a>
+                {/* <a style={styles.btnInner} href={`/getClips/twitch-api`}>Twitch API</a> */}
                 <a style={styles.btnInner} href={`/getClips/following`}>Following</a>
             </div>
         </ScrollToTopComponent>
