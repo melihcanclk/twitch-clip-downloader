@@ -53,6 +53,7 @@ const Home = () => {
       <div style={styles.body}>
         {/* <a style={styles.btnInner} href={`/addUser`}>Add User</a> */}
         <a style={styles.btnInner} href={`/getClips`}>Get Clips</a>
+
       </div>
     </ScrollToTopComponent>
   )
