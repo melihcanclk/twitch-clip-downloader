@@ -6,7 +6,7 @@ import { TypeOfClip } from '@/components/TypeOfClip';
 import DisplayClips from '../displayClips/DisplayClips';
 
 export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setNumberOfClips }) => {
-
+    const [numberOfStreamersDisplayed, setNumberOfStreamersDisplayed] = useState(0);
 
     useEffect(() => {
         // when value changes, get clips using entry username
@@ -36,7 +36,7 @@ export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setN
                         if (data.length > 0) {
                             const filteredClips = data.filter(clip => clip.game_id === game_id);
                             setNumberOfClips((prev) => prev + filteredClips.length);
-
+                            setNumberOfStreamersDisplayed((prev) => prev + 1);
                             // setClips with username as key and clips as value
                             setClips((prev) => ({ ...prev, [username]: filteredClips }));
                         }
@@ -59,11 +59,21 @@ export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setN
         setClips(slicedClips);
     }, [numberOfClips])
 
+    const numberOfStreamers = streamers.reduce((acc, curr) => {
+        return acc + curr.length;
+    }, 0);
 
     return (
         <Box sx={{
             width: '100%',
         }}>
+            <Box sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <h3>{numberOfStreamersDisplayed} / {numberOfStreamers} streamers displayed</h3>
+            </Box>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
             <DisplayClips clips={clips} />
         </Box>
