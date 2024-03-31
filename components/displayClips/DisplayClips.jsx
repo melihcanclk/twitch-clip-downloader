@@ -65,41 +65,25 @@ const StreamerItem = ({ clip, index }) => {
 const DisplayClips = ({ clips }) => {
     // const parentDomain = node_env === 'development' ? 'localhost' : domain.replace('https://', '').slice(0, -1)
     // get if there is any array in clips object that has length > 0
-    const hasClips = Object.keys(clips).some((streamer) => {
-        return clips[streamer].length > 0
-    })
-    console.log('hasClips', hasClips)
+
     return (
         < div >
             {
                 <Box sx={{ flexGrow: 1 }}>
                     <Grid container justifyContent={"center"} spacing={{ xs: 2, md: 3 }} >
-                        {hasClips ? (
+                        {
                             // for each streamer, display clips
                             Object.keys(clips).map((streamer) => {
                                 return (
-                                    clips[streamer].map((clip, index) => {
+                                    clips[streamer].length > 0 ? clips[streamer].map((clip, index) => {
                                         return (
                                             <Grid item xs={12} md={12} key={index}>
                                                 <StreamerItem clip={clip} index={index} />
                                             </Grid>
                                         )
-                                    })
+                                    }) : (" ")
                                 )
-                            }
-                            )
-                        ) : (
-                            <Box sx={{
-                                position: 'fixed',
-                                top: '50%',
-                                left: '50%',
-                            }}>
-                                <Grid item xs={12} md={12}>
-                                    <Loader />
-                                </Grid>
-                            </Box>
-                        )
-
+                            })
                         }
                     </Grid>
                 </Box>
