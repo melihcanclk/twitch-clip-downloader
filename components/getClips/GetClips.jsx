@@ -27,7 +27,7 @@ export const GetClips = ({ clips, setClips, streamers, type, numberOfClips, setN
                     const game_id = game.data[0].id;
                     const today = new Date();
                     // same hour yesterday
-                    const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7, today.getHours(), today.getMinutes(), today.getSeconds());
+                    const dayBefore = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1, today.getHours(), today.getMinutes(), today.getSeconds());
                     const dayBeforeISO = dayBefore.toISOString();
                     // TODO : add pagination
                     try {
